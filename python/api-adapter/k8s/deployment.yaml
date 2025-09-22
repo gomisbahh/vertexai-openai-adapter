@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vertexai-adapter
+  labels:
+    app: vertexai-adapter
+    environment: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vertexai-adapter
+      environment: dev
+  template:
+    metadata:
+      labels:
+        app: vertexai-adapter
+        environment: dev
+    spec:
+      containers:
+      - image: gcr.io/${PROJECT_ID}/vertexai-adapter:latest
+        imagePullPolicy: Always
+        name: vertexai
+        env:
+        - name: PROJECT_ID
+          value: "1073848166840"
+        - name: LOCATION
+          value: "europe-west1"
+        - name: ENDPOINT_ID
+          value: "5010777952984498176"
+        - name: ENDPOINT_TYPE
+          value: "PRIVATE"
+        - name: ENDPOINT_PROTOCOL
+          value: "https"
+        - name: ENDPOINT_IP
+          value: "10.132.8.10"
+        ports:
+        - containerPort: 8000
+          name: http
+        resources:
+          limits:
+            cpu: 500m
+            ephemeral-storage: 1Gi
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            ephemeral-storage: 1Gi
+            memory: 256Mi
+        securityContext:
+          capabilities:
+            drop:
+            - NET_RAW
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      serviceAccount: sa-myletters
+      serviceAccountName: sa-myletters
+      tolerations:
+      - effect: NoSchedule
+        key: kubernetes.io/arch
+        operator: Equal
+        value: amd64
+      terminationGracePeriodSeconds: 30
+      # For a Deployment, the restartPolicy must be 'Always'.
+      restartPolicy: Always

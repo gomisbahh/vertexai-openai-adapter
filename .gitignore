@@ -1,0 +1,42 @@
+# Generated .gitignore file for: Java, Python
+# Created with FOSSA's DevOps Tools
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.logs
+.mtj.tmp/
+hs_err_pid*
+target/
+build/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+venv/
+env/
+.env
+*.so
+
+# Common
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*.tmp
+*.swp
+*~
+
+# IDE and editor generated files
+.idea/
+*.sublime-*
+
+# Local environment files
+.env
+.env.local
+.env.*.local
